@@ -61,6 +61,37 @@ Playwright-BDD has several unique features:
 - 🎯 [Scoped step definitions](https://vitalets.github.io/playwright-bdd/#/writing-steps/scoped)  
 - ✨ [Exporting steps](https://vitalets.github.io/playwright-bdd/#/writing-features/chatgpt) for AI  
 - ♻️ [Re-usable step functions](https://vitalets.github.io/playwright-bdd/#/writing-steps/reusing-step-fn)  
+- 🎭 **[Playwright Test Agents](#playwright-test-agents)** for AI-powered test generation and maintenance
+
+## Playwright Test Agents
+
+Playwright-BDD includes three AI agents to automate your testing workflow:
+
+- 🎭 **Planner** - Explores your app and creates test plans
+- 🎭 **Generator** - Converts test plans into Playwright tests
+- 🎭 **Healer** - Automatically repairs failing tests
+
+### Getting Started
+
+Generate agent definitions for your AI tool:
+
+```bash
+npx bddgen init-agents --loop=vscode
+```
+
+This creates:
+- Agent definitions in `.github/agents/`
+- A `specs/` directory for test plans
+- A `tests/` directory for generated tests
+- A seed test template
+
+### Usage
+
+1. **Planner**: "Generate a test plan for user checkout flow"
+2. **Generator**: "Create tests from specs/checkout-flow.md"
+3. **Healer**: "Fix the failing login test"
+
+[Learn more about Playwright Test Agents](https://vitalets.github.io/playwright-bdd/#/test-agents)  
 
 ## Documentation
 Check out the [documentation website](https://vitalets.github.io/playwright-bdd/#/).

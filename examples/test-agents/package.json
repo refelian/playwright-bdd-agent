@@ -1,0 +1,12 @@
+{
+  "name": "@examples/test-agents",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "*",
+    "playwright-bdd": "*"
+  }
+}
