@@ -65,10 +65,10 @@ Playwright-BDD has several unique features:
 
 ## Playwright Test Agents
 
-Playwright-BDD includes three AI agents to automate your testing workflow:
+Playwright-BDD includes three AI agents to automate your BDD testing workflow:
 
-- 🎭 **Planner** - Explores your app and creates test plans
-- 🎭 **Generator** - Converts test plans into Playwright tests
+- 🎭 **Planner** - Explores your app and creates Gherkin feature files
+- 🎭 **Generator** - Converts feature files into step definitions
 - 🎭 **Healer** - Automatically repairs failing tests
 
 ### Getting Started
@@ -81,15 +81,16 @@ npx bddgen init-agents --loop=vscode
 
 This creates:
 - Agent definitions in `.github/agents/`
-- A `specs/` directory for test plans
-- A `tests/` directory for generated tests
-- A seed test template
+- A `features/` directory for Gherkin feature files
+- A `features/steps/` directory for step definitions
+- A seed feature file template
 
 ### Usage
 
-1. **Planner**: "Generate a test plan for user checkout flow"
-2. **Generator**: "Create tests from specs/checkout-flow.md"
-3. **Healer**: "Fix the failing login test"
+1. **Planner**: "Generate a feature file for user checkout flow"
+2. **Generator**: "Create step definitions from features/checkout-flow.feature"
+3. Run `npx bddgen` to generate test specs
+4. **Healer**: "Fix the failing login test"
 
 [Learn more about Playwright Test Agents](https://vitalets.github.io/playwright-bdd/#/test-agents)  
 
