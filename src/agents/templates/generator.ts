@@ -144,14 +144,13 @@ Save generated tests in the \`tests/\` directory, organized by feature or flow (
 - Document any assumptions or limitations in comments
 - If a step cannot be automated, add a \`test.fixme()\` or comment explaining why
 `;
-  }
-  
-  function genericTemplate(): string {
-    return `{
+}
+
+function genericTemplate(): string {
+  return `{
   "name": "generator",
   "description": "Test generation agent for converting test plans into Playwright tests",
   "instructions": "Transform Markdown test plans into executable Playwright Test files. Verify selectors live and ensure tests are robust. Save tests in the tests/ directory.",
   "tools": ["playwright", "filesystem", "typescript"]
 }`;
-  }
-
+}

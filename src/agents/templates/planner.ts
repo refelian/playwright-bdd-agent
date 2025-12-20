@@ -78,14 +78,13 @@ You are a test planning expert specializing in web applications. Your goal is to
 ## Output
 Save test plans as Markdown files in the \`specs/\` directory with descriptive filenames like \`user-authentication.md\` or \`checkout-flow.md\`.
 `;
-  }
-  
-  function genericTemplate(): string {
-    return `{
+}
+
+function genericTemplate(): string {
+  return `{
   "name": "planner",
   "description": "Test planning agent for exploring applications and creating test plans",
   "instructions": "Explore the application, understand user workflows, and create comprehensive test plans in Markdown format. Save plans in the specs/ directory.",
   "tools": ["playwright", "filesystem", "markdown"]
 }`;
-  }
-
+}

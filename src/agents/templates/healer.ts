@@ -176,14 +176,13 @@ Update test files in the \`tests/\` directory with fixes. Add comments explainin
 - Test intent is preserved
 - No new failures introduced
 `;
-  }
-  
-  function genericTemplate(): string {
-    return `{
+}
+
+function genericTemplate(): string {
+  return `{
   "name": "healer",
   "description": "Test repair agent for automatically fixing failing tests",
   "instructions": "Analyze test failures, inspect UI state, and repair tests by updating selectors, adding waits, or adjusting assertions. Skip tests if functionality is broken.",
   "tools": ["playwright", "filesystem", "debugging", "typescript"]
 }`;
-  }
-
+}

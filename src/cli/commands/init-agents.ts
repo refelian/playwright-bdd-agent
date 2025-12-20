@@ -17,12 +17,12 @@ export const initAgentsCommand = new Command('init-agents')
   .action(async () => {
     const opts = initAgentsCommand.optsWithGlobals<InitAgentsCommandOptions>();
     const loopType = opts.loop || 'vscode';
-    
+
     logger.log(`Generating Playwright Test Agent definitions for ${loopType}...`);
-    
+
     const generator = new AgentGenerator(loopType);
     await generator.generate();
-    
+
     logger.log('✅ Agent definitions generated successfully!');
     logger.log('');
     logger.log('Next steps:');
