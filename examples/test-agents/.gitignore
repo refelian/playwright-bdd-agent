@@ -1,0 +1,10 @@
+# Generated test specs
+.features-gen/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Node
+node_modules/

@@ -9,6 +9,14 @@ npx bddgen init-agents --loop=vscode
 ```
 
 The agents will help you:
-- 🎭 **planner.md** - Explore the app and create test plans
-- 🎭 **generator.md** - Convert test plans to Playwright tests
+- 🎭 **planner.md** - Explore the app and create Gherkin feature files
+- 🎭 **generator.md** - Create step definitions from feature files
 - 🎭 **healer.md** - Automatically fix failing tests
+
+## BDD Workflow
+
+1. **Planner** creates `.feature` files in Gherkin format
+2. **Generator** creates step definitions in `features/steps/`
+3. Run `npx bddgen` to generate Playwright test specs
+4. Run `npx playwright test` to execute the tests
+5. **Healer** fixes failing tests when needed

@@ -28,11 +28,12 @@ export const initAgentsCommand = new Command('init-agents')
       logger.log('');
       logger.log('Next steps:');
       logger.log('  1. Review the generated agents in .github/agents/');
-      logger.log('  2. Create a seed test in tests/seed.spec.ts');
+      logger.log('  2. Review the seed feature in features/seed.feature');
       logger.log('  3. Use your AI tool to command the agents:');
-      logger.log('     - 🎭 planner: Generate test plans');
-      logger.log('     - 🎭 generator: Create Playwright tests from plans');
-      logger.log('     - 🎭 healer: Fix failing tests');
+      logger.log('     - 🎭 planner: Generate Gherkin feature files');
+      logger.log('     - 🎭 generator: Create step definitions from feature files');
+      logger.log('  4. Run `npx bddgen` to generate Playwright test specs');
+      logger.log('  5. Run `npx playwright test` to execute the tests');
     } catch (error) {
       logger.log('❌ Failed to generate agent definitions');
       logger.log(`Error: ${error instanceof Error ? error.message : String(error)}`);

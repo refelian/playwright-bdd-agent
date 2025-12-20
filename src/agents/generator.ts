@@ -25,12 +25,13 @@ export class AgentGenerator {
     await this.generateAgent('generator', generatorTemplate(this.loopType));
     await this.generateAgent('healer', healerTemplate(this.loopType));
 
-    // Create directories for specs and tests if they don't exist
-    await this.createDirectory('specs');
-    await this.createDirectory('tests');
+    // Create directories for features and step definitions
+    await this.createDirectory('features');
+    await this.createDirectory('features/steps');
 
-    // Generate a basic seed test if it doesn't exist
+    // Generate a basic seed test and fixtures if they don't exist
     await this.generateSeedTest();
+    await this.generateFixtures();
   }
 
   private async generateAgent(name: string, content: string): Promise<void> {
@@ -56,24 +57,58 @@ export class AgentGenerator {
   }
 
   private async generateSeedTest(): Promise<void> {
-    const seedTestPath = path.join(process.cwd(), 'tests', 'seed.spec.ts');
+    const seedTestPath = path.join(process.cwd(), 'features', 'seed.feature');
     if (!existsSync(seedTestPath)) {
-      const seedContent = `import { test, expect } from '@playwright/test';
+      const seedContent = `Feature: Seed Test
 
-test('seed', async ({ page }) => {
-  // This is a seed test that provides a ready-to-use page context
-  // for the planner agent to explore your application.
-  // 
+  This is a seed feature that provides a ready-to-use page context
+  for the planner agent to explore your application.
+
+  Scenario: Setup application context
+    Given I navigate to the application
+    # Replace the URL in the step definition with your application URL
+
+  # You can add authentication or setup scenarios here
+  # Scenario: Authenticated user
+  #   Given I am on the login page
+  #   When I enter "user" as username
+  #   And I enter "password" as password
+  #   And I click the "Login" button
+  #   Then I should be logged in
+`;
+      await fs.writeFile(seedTestPath, seedContent, 'utf8');
+    }
+  }
+
+  private async generateFixtures(): Promise<void> {
+    const fixturesPath = path.join(process.cwd(), 'features', 'steps', 'fixtures.ts');
+    if (!existsSync(fixturesPath)) {
+      const fixturesContent = `import { test as base } from 'playwright-bdd';
+
+// Define custom fixtures here if needed
+// export const test = base.extend<{}>({});
+
+export const test = base;
+`;
+      await fs.writeFile(fixturesPath, fixturesContent, 'utf8');
+    }
+
+    // Generate initial step definitions for the seed feature
+    const seedStepsPath = path.join(process.cwd(), 'features', 'steps', 'seed.ts');
+    if (!existsSync(seedStepsPath)) {
+      const seedStepsContent = `import { createBdd } from 'playwright-bdd';
+import { test } from './fixtures';
+
+const { Given } = createBdd(test);
+
+Given('I navigate to the application', async ({ page }) => {
   // Replace the URL below with your application URL:
   await page.goto('https://demo.playwright.dev/todomvc');
   
   // Add any necessary setup or authentication steps here
-  // await page.getByLabel('Username').fill('user');
-  // await page.getByLabel('Password').fill('password');
-  // await page.getByRole('button', { name: 'Login' }).click();
 });
 `;
-      await fs.writeFile(seedTestPath, seedContent, 'utf8');
+      await fs.writeFile(seedStepsPath, seedStepsContent, 'utf8');
     }
   }
 }
