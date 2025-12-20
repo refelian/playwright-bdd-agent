@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import { existsSync } from 'fs';
 import path from 'path';
 import { plannerTemplate } from './templates/planner';
 import { generatorTemplate } from './templates/generator';
@@ -15,8 +16,8 @@ export class AgentGenerator {
 
   async generate(): Promise<void> {
     // Create output directory if it doesn't exist
-    if (!fs.existsSync(this.outputDir)) {
-      fs.mkdirSync(this.outputDir, { recursive: true });
+    if (!existsSync(this.outputDir)) {
+      await fs.mkdir(this.outputDir, { recursive: true });
     }
 
     // Generate agent definitions based on loop type
@@ -25,8 +26,8 @@ export class AgentGenerator {
     await this.generateAgent('healer', healerTemplate(this.loopType));
 
     // Create directories for specs and tests if they don't exist
-    this.createDirectory('specs');
-    this.createDirectory('tests');
+    await this.createDirectory('specs');
+    await this.createDirectory('tests');
 
     // Generate a basic seed test if it doesn't exist
     await this.generateSeedTest();
@@ -35,7 +36,7 @@ export class AgentGenerator {
   private async generateAgent(name: string, content: string): Promise<void> {
     const fileName = this.getAgentFileName(name);
     const filePath = path.join(this.outputDir, fileName);
-    fs.writeFileSync(filePath, content, 'utf8');
+    await fs.writeFile(filePath, content, 'utf8');
   }
 
   private getAgentFileName(name: string): string {
@@ -47,16 +48,16 @@ export class AgentGenerator {
     return `${name}.json`;
   }
 
-  private createDirectory(dirName: string): void {
+  private async createDirectory(dirName: string): Promise<void> {
     const dirPath = path.join(process.cwd(), dirName);
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
+    if (!existsSync(dirPath)) {
+      await fs.mkdir(dirPath, { recursive: true });
     }
   }
 
   private async generateSeedTest(): Promise<void> {
     const seedTestPath = path.join(process.cwd(), 'tests', 'seed.spec.ts');
-    if (!fs.existsSync(seedTestPath)) {
+    if (!existsSync(seedTestPath)) {
       const seedContent = `import { test, expect } from '@playwright/test';
 
 test('seed', async ({ page }) => {
@@ -72,7 +73,7 @@ test('seed', async ({ page }) => {
   // await page.getByRole('button', { name: 'Login' }).click();
 });
 `;
-      fs.writeFileSync(seedTestPath, seedContent, 'utf8');
+      await fs.writeFile(seedTestPath, seedContent, 'utf8');
     }
   }
 }
