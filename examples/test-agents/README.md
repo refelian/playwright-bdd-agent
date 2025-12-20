@@ -18,30 +18,40 @@ npm install
 
 ### 1. 🎭 Planner Agent
 
-The planner explores your application and creates test plans.
+The planner explores your application and creates BDD feature files in Gherkin format.
 
 **Usage:**
-> "Generate a test plan for adding and completing todos"
+> "Generate a feature file for adding and completing todos"
 
-**Output:** `specs/todo-operations.md`
+**Output:** `features/todo-operations.feature`
 
 ### 2. 🎭 Generator Agent
 
-The generator converts test plans into executable tests.
+The generator converts Gherkin feature files into step definitions for Playwright-BDD.
 
 **Usage:**
-> "Create Playwright tests from specs/todo-operations.md"
+> "Create step definitions from features/todo-operations.feature"
 
-**Output:** `tests/todo-operations.spec.ts`
+**Output:** `features/steps/todo-operations.ts`
 
-### 3. 🎭 Healer Agent
+### 3. Generate Test Specs
 
-The healer automatically fixes failing tests.
+After creating step definitions, run `npx bddgen` to generate Playwright test specs:
+
+```bash
+npx bddgen
+```
+
+**Output:** `.features-gen/` directory with generated test files
+
+### 4. 🎭 Healer Agent
+
+The healer automatically fixes failing tests by updating step definitions or selectors.
 
 **Usage:**
-> "Fix the failing test in tests/todo-operations.spec.ts"
+> "Fix the failing test for todo operations"
 
-**Output:** Updated test file with fixes
+**Output:** Updated step definitions with fixes
 
 ## File Structure
 
@@ -51,22 +61,33 @@ The healer automatically fixes failing tests.
     planner.md      # Planner agent definition
     generator.md    # Generator agent definition
     healer.md       # Healer agent definition
-specs/
-  todo-operations.md  # Test plan (human-readable)
-tests/
-  seed.spec.ts       # Seed test for setup
-  todo-operations.spec.ts  # Generated test
+features/
+  seed.feature              # Seed feature for setup
+  todo-operations.feature   # BDD feature file (Gherkin)
+  steps/
+    fixtures.ts             # Custom fixtures
+    seed.ts                 # Seed step definitions
+    todo-operations.ts      # Step definitions
+.features-gen/              # Generated test specs (created by bddgen)
+playwright.config.ts        # Playwright-BDD configuration
 ```
 
 ## Running Tests
 
+1. Generate test specs from feature files:
+```bash
+npx bddgen
+```
+
+2. Run the tests:
 ```bash
 npm test
 ```
 
 ## Notes
 
-- The seed test provides a ready-to-use page context for the agents
-- Test plans in `specs/` are human-readable and can be reviewed by stakeholders
-- Generated tests follow Playwright best practices
-- The healer can automatically fix selector changes and timing issues
+- The seed feature provides a ready-to-use page context for the agents
+- Feature files in `features/` are human-readable Gherkin scenarios
+- Step definitions in `features/steps/` are reusable across scenarios
+- Generated test specs in `.features-gen/` are created by `npx bddgen`
+- The healer can automatically fix selector changes and timing issues in step definitions

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "playwright test"
+    "bddgen": "bddgen",
+    "test": "npm run bddgen && playwright test"
   },
   "devDependencies": {
     "@playwright/test": "*",

@@ -164,11 +164,11 @@ Test Fails
 ## Available Tools
 - Playwright browser automation with debugging
 - Test execution and artifact inspection
-- File system access for reading/writing tests
+- File system access for reading/writing step definitions and generated tests
 - Screenshot and trace analysis
 
 ## Output
-Update test files in the \`tests/\` directory with fixes. Add comments explaining significant changes.
+Update step definitions in the \`features/steps/\` directory or generated test files in the \`.features-gen/\` directory with fixes. Add comments explaining significant changes. If step definitions are fixed, re-run \`npx bddgen\` to regenerate test specs.
 
 ## Success Criteria
 - Test passes consistently
