@@ -64,3 +64,16 @@ playwright-bdd: v5.1.1
 @playwright/test: v1.36.2
 @cucumber/cucumber: v9.2.0
 ```
+
+## `bddgen inspect --json`
+Prints a stable machine-readable JSON report for external tooling.
+The report includes discovered feature files, scenarios, steps, matched step definitions,
+and diagnostics for parse errors, missing steps, and ambiguous steps.
+
+```
+$ npx bddgen inspect --json
+```
+
+#### Options
+* `--config` - path to Playwright config
+* `--json` - output JSON report to stdout

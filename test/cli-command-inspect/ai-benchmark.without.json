@@ -1,0 +1,24 @@
+{
+  "parseErrors": [
+    {
+      "featureUri": "Feature123: malformed feature",
+      "line": 1,
+      "message": "Invalid feature keyword. Expected 'Feature', got 'Feature123'"
+    }
+  ],
+  "missingSteps": [
+    {
+      "featureUri": "cli-command-inspect",
+      "scenario": "missing scenario",
+      "step": "Given missing step 10"
+    }
+  ],
+  "ambiguousSteps": [
+    {
+      "featureUri": "cli-command-inspect",
+      "scenario": "ambiguous scenario",
+      "step": "When duplicate step",
+      "matchCount": 2
+    }
+  ]
+}

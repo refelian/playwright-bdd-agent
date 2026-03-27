@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { testCommand } from './commands/test';
 import { envCommand } from './commands/env';
 import { exportCommand } from './commands/export';
+import { inspectCommand } from './commands/inspect';
 import { getPackageVersion } from '../utils';
 import { configOption } from './options';
 
@@ -17,5 +18,6 @@ program
   .helpCommand(false)
   .addCommand(testCommand, { isDefault: true })
   .addCommand(exportCommand)
+  .addCommand(inspectCommand)
   .addCommand(envCommand)
   .parse();

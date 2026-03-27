@@ -10,6 +10,7 @@ test(`${testDir.name} (global)`, () => {
   expect(stdout).toContain(version);
   expect(stdout).toContain('-c, --config');
   expect(stdout).toContain('test [options]');
+  expect(stdout).toContain('inspect [options]');
 });
 
 test(`${testDir.name} (test)`, () => {

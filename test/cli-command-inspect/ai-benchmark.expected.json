@@ -1,0 +1,24 @@
+{
+  "parseErrors": [
+    {
+      "featureUri": "features/invalid.feature",
+      "line": 1,
+      "message": "Parse error"
+    }
+  ],
+  "missingSteps": [
+    {
+      "featureUri": "features/sample.feature",
+      "scenario": "missing scenario",
+      "step": "missing step 10"
+    }
+  ],
+  "ambiguousSteps": [
+    {
+      "featureUri": "features/sample.feature",
+      "scenario": "ambiguous scenario",
+      "step": "duplicate step",
+      "matchCount": 2
+    }
+  ]
+}
