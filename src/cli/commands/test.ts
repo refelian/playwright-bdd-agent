@@ -12,6 +12,7 @@ import { defaults } from '../../config/defaults';
 import { setBddGenPhase } from '../helpers/bddgenPhase';
 import { showWarnings } from '../../config/warnings';
 import { Logger } from '../../utils/logger';
+import { inspectAndSaveOutputs } from '../../inspect/saveOutput';
 
 const GEN_WORKER_PATH = path.resolve(__dirname, '..', 'worker.js');
 
@@ -34,6 +35,7 @@ export const testCommand = new Command('test')
     const isVerbose = hasVerboseFlag(configs);
 
     await generateFilesForConfigs(configs);
+    await inspectAndSaveOutputs(configs);
 
     if (isVerbose) printDone();
   });

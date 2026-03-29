@@ -57,6 +57,8 @@ export type BDDInputConfig = CucumberConfigDeprecated & {
   missingSteps?: 'fail-on-gen' | 'fail-on-run' | 'skip-scenario';
   /** Enables additional matching by keywords in step definitions */
   matchKeywords?: boolean;
+  /** Path to save BDD inspect data (step definitions, features, diagnostics) for AI tools */
+  inspectOutput?: string;
   /** Options for fixing tests with AI */
   aiFix?: {
     promptTemplate?: string;

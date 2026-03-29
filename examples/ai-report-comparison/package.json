@@ -1,0 +1,7 @@
+{
+  "type": "commonjs",
+  "scripts": {
+    "test:report-enabled": "npx bddgen -c playwright.report-enabled.config.ts && npx playwright test -c playwright.report-enabled.config.ts",
+    "test:report-disabled": "npx bddgen -c playwright.report-disabled.config.ts && npx playwright test -c playwright.report-disabled.config.ts"
+  }
+}

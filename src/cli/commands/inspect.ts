@@ -6,6 +6,7 @@ import { ConfigOption } from '../options';
 import { assertConfigsCount } from './test';
 import { BddInspector } from '../../inspect';
 import { exit } from '../../utils/exit';
+import { writeInspectOutputs } from '../../inspect/saveOutput';
 
 type InspectCommandOptions = ConfigOption & {
   json?: boolean;
@@ -30,4 +31,5 @@ export const inspectCommand = new Command('inspect')
 
     const report = await new BddInspector().inspectConfigs(configs);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    await writeInspectOutputs(configs, report.configs);
   });
