@@ -1,30 +1,37 @@
-# AI Report Comparison: Token Usage with `promptAttachment` Enabled vs Disabled
+# AI Report Comparison: AI Context with `promptAttachment` and `inspectOutput`
 
-This example demonstrates how enabling `aiFix.promptAttachment` in playwright-bdd
-significantly reduces the number of tokens an AI model needs to diagnose and fix
-a failing test.
+This example demonstrates how `aiFix.promptAttachment` and `inspectOutput` in
+playwright-bdd provide structured context for AI tools — reducing token usage
+and eliminating manual context gathering when diagnosing and fixing failing tests.
 
 ## Setup
 
 Two Playwright configs are provided:
-- `playwright.report-enabled.config.ts` — `aiFix.promptAttachment: true`
-- `playwright.report-disabled.config.ts` — default (no `aiFix`)
+- `playwright.report-enabled.config.ts` — `aiFix.promptAttachment: true` and
+  `inspectOutput: 'bdd-metadata.json'`
+- `playwright.report-disabled.config.ts` — default (no `aiFix`, no `inspectOutput`)
 
 The feature file contains 4 scenarios, one of which intentionally fails.
 
 ## Run
 
 ```bash
-# With report enabled (generates AI prompt attachment on failure)
+# With report enabled (generates AI prompt attachment on failure + BDD metadata)
 npm run test:report-enabled
 
-# Without report (no AI prompt attachment)
+# Without report (no AI prompt attachment, no BDD metadata)
 npm run test:report-disabled
 ```
 
 Both runs expectedly fail on the "Verify API reference navigation" scenario.
 
-## Token Usage Comparison
+You can also run `bddgen inspect` to generate the BDD metadata independently:
+
+```bash
+npx bddgen inspect --json -c playwright.report-enabled.config.ts
+```
+
+## AI Context Comparison
 
 ### With `promptAttachment: true` (~200–400 tokens)
 
@@ -65,9 +72,21 @@ ARIA snapshot of the page:
 The AI receives **only** the failing scenario's steps, the error, the relevant
 code snippet, and an ARIA snapshot of the page at the moment of failure.
 
-### Without `promptAttachment` (~1500–3000+ tokens)
+### With `inspectOutput`
 
-Without the report feature, the user must manually copy-paste all relevant context
+When `inspectOutput` is set, `bddgen test` (and `bddgen inspect`) writes a
+structured JSON file (`bdd-metadata.json`) containing BDD project metadata:
+
+- **Feature files** — all scenarios and their steps
+- **Step definitions** — patterns, locations, and keyword types
+- **Diagnostics** — parse errors, missing steps, ambiguous matches
+
+This file is designed for AI tools (e.g. code agents, IDE assistants) that need
+project-wide BDD context without parsing source files directly.
+
+### Without `promptAttachment` or `inspectOutput` (~1500–3000+ tokens)
+
+Without these features, the user must manually copy-paste all relevant context
 into the AI chat. This typically includes:
 
 1. **The entire feature file** (all 4 scenarios, ~20 lines, ~150 tokens)
@@ -92,6 +111,7 @@ into the AI chat. This typically includes:
 | Error formatting | Clean (no ANSI codes) | Raw terminal output |
 | Steps included | Only up to failing step | Entire feature file |
 | Code snippet | Only relevant lines | Entire step definition files |
+| BDD project metadata | Auto-generated JSON (`inspectOutput`) | Manual |
 
 ### Why This Matters
 
@@ -100,3 +120,5 @@ into the AI chat. This typically includes:
 - **Accuracy**: A focused prompt with an ARIA snapshot gives the AI model more
   relevant signal and less noise, producing better fix suggestions.
 - **Speed**: No manual context gathering — just click "Fix with AI" in the report.
+- **Tooling**: `inspectOutput` gives AI tools structured access to your BDD
+  project metadata (features, steps, diagnostics) without parsing source files.
