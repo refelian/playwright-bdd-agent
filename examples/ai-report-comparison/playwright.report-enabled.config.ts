@@ -3,7 +3,6 @@ import { defineBddConfig, cucumberReporter } from 'playwright-bdd';
 
 const testDir = defineBddConfig({
   featuresRoot: './features',
-  inspectOutput: 'bdd-metadata.json',
   aiFix: {
     promptAttachment: true,
   },
